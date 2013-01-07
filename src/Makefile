@@ -2,16 +2,17 @@ TARGETS	= compare fontsel progress
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
-CC	?= cc
-CPPFLAGSF?=
-CPPFLAGS?=
+SBINDIR	= $(PREFIX)/sbin
+CC	= cc
+CPPFLAGSF=
+CPPFLAGS=
 CFLAGSF	= -W `pkg-config gtk+-3.0 --cflags`
 CFLAGS	= -Wall -g -O2 -pedantic
 LDFLAGSF= `pkg-config gtk+-3.0 --libs`
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: $(TARGETS)
