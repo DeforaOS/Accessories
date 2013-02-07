@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Desktop Accessories */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ static int _progress(Prefs * prefs, char * argv[])
 		prefs->filename = "Standard input";
 	else if((p.fd = open(prefs->filename, O_RDONLY)) < 0)
 		return _progress_error(&p, prefs->filename, 1);
-	else if(fstat(p.fd, &st) == 0)
+	else if(fstat(p.fd, &st) == 0 && S_ISREG(st.st_mode))
 		prefs->length = st.st_size;
 	p.in_channel = g_io_channel_unix_new(p.fd);
 	g_io_channel_set_encoding(p.in_channel, NULL, NULL);
@@ -523,13 +523,14 @@ static void _timeout_done(Progress * progress, guint64 * rate)
 		tv.tv_sec--;
 		tv.tv_usec += 1000000;
 	}
-	r = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	sunit = "kB";
-	*rate = (progress->cnt * 1024) / r;
-	if((r = progress->cnt / r) > 1024)
+	if((r = (tv.tv_sec * 1000) + (tv.tv_usec / 1000)) > 0.0)
 	{
-		r /= 1024;
-		sunit = "MB";
+		*rate = (progress->cnt * 1024) / r;
+		if((r = progress->cnt / r) > 1024.0)
+		{
+			r /= 1024.0;
+			sunit = "MB";
+		}
 	}
 	if(progress->prefs->length == 0)
 		snprintf(buf, sizeof(buf), "%.1f %s (%.1f %s/s)", cnt, dunit,
