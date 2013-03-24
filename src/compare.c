@@ -77,7 +77,11 @@ static int _compare(char const * string1, char const * string2)
 	compare.label = gtk_label_new(" ");
 	gtk_misc_set_alignment(GTK_MISC(compare.label), 0.0, 0.5);
 	gtk_box_pack_start(GTK_BOX(vbox), compare.label, FALSE, TRUE, 0);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	bbox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+#else
 	bbox = gtk_hbutton_box_new();
+#endif
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
 	widget = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
 	g_signal_connect_swapped(widget, "clicked", G_CALLBACK(
