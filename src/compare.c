@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Desktop Accessories */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,11 @@ static int _compare(char const * string1, char const * string2)
 	gtk_window_set_title(GTK_WINDOW(window), "Compare strings");
 	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
 				_compare_on_closex), window);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+#else
 	vbox = gtk_vbox_new(FALSE, 4);
+#endif
 	compare.entry1 = gtk_entry_new();
 	if(string1 != NULL)
 		gtk_entry_set_text(GTK_ENTRY(compare.entry1), string1);
