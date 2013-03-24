@@ -55,11 +55,11 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 compare $(DESTDIR)$(BINDIR)/compare
+	$(INSTALL) -m 0755 -- compare $(DESTDIR)$(BINDIR)/compare
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 fontsel $(DESTDIR)$(BINDIR)/fontsel
+	$(INSTALL) -m 0755 -- fontsel $(DESTDIR)$(BINDIR)/fontsel
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 progress $(DESTDIR)$(BINDIR)/progress
+	$(INSTALL) -m 0755 -- progress $(DESTDIR)$(BINDIR)/progress
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(BINDIR)/compare
