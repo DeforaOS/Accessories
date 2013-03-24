@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2006-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Desktop Accessories */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,11 @@ static int _fontsel(void)
 	gtk_window_set_title(GTK_WINDOW(window), "Font browser");
 	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
 				_fontsel_on_closex), window);
+#if GTK_CHECK_VERSION(3, 2, 0)
+	fontsel = gtk_font_chooser_widget_new();
+#else
 	fontsel = gtk_font_selection_new();
+#endif
 	gtk_container_add(GTK_CONTAINER(window), fontsel);
 	gtk_widget_show_all(window);
 	gtk_main();
