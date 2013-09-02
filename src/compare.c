@@ -74,7 +74,7 @@ static int _compare(char const * string1, char const * string2)
 	g_signal_connect_swapped(compare.entry2, "changed", G_CALLBACK(
 				_compare_on_changed), &compare);
 	gtk_box_pack_start(GTK_BOX(vbox), compare.entry2, FALSE, TRUE, 0);
-	compare.label = gtk_label_new(" ");
+	compare.label = gtk_label_new(NULL);
 	gtk_misc_set_alignment(GTK_MISC(compare.label), 0.0, 0.5);
 	gtk_box_pack_start(GTK_BOX(vbox), compare.label, FALSE, TRUE, 0);
 #if GTK_CHECK_VERSION(3, 0, 0)
@@ -108,17 +108,18 @@ static int _usage(void)
 static void _compare_on_changed(gpointer data)
 {
 	Compare * compare = data;
+	GtkLabel * label = GTK_LABEL(compare->label);
 	char const * string1;
 	char const * string2;
 
 	string1 = gtk_entry_get_text(GTK_ENTRY(compare->entry1));
 	string2 = gtk_entry_get_text(GTK_ENTRY(compare->entry2));
-	if(strcmp(string1, string2) == 0)
-		gtk_label_set_text(GTK_LABEL(compare->label),
-				"The strings MATCH");
+	if(string1[0] == '\0' && string2[0] == '\0')
+		gtk_label_set_text(label, "");
+	else if(strcmp(string1, string2) == 0)
+		gtk_label_set_text(label, "The strings MATCH");
 	else
-		gtk_label_set_text(GTK_LABEL(compare->label),
-				"The strings do NOT match");
+		gtk_label_set_text(label, "The strings do NOT match");
 }
 
 
