@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Desktop Accessories */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -600,9 +600,10 @@ static void _timeout_remaining(Progress * progress, guint64 rate)
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: progress [-x][-z][-b buffer size][-f file][-l length]"
+	fputs("Usage: progress [-x][-ez][-b buffer size][-f file][-l length]"
 "[-p prefix]\n"
 "                [-t title] cmd [args...]\n"
+"  -e	Ignored (for compatibility)\n"
 "  -x	Start in embedded mode\n", stderr);
 	return 1;
 }
@@ -618,7 +619,7 @@ int main(int argc, char * argv[])
 	memset(&prefs, 0, sizeof(prefs));
 	prefs.bufsiz = 65536;
 	gtk_init(&argc, &argv);
-	while((o = getopt(argc, argv, "b:f:l:t:xz")) != -1)
+	while((o = getopt(argc, argv, "b:ef:l:t:xz")) != -1)
 		switch(o)
 		{
 			case 'b':
@@ -626,6 +627,8 @@ int main(int argc, char * argv[])
 				if(optarg[0] == '\0' || *p != '\0'
 						|| prefs.bufsiz <= 0)
 					return _usage();
+				break;
+			case 'e':
 				break;
 			case 'f':
 				prefs.filename = optarg;
