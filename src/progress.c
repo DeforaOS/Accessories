@@ -41,8 +41,8 @@ typedef struct _Prefs
 {
 	int flags;
 	ssize_t bufsiz;
-	char * filename;
-	char * title;
+	char const * filename;
+	char const * title;
 	size_t length;
 } Prefs;
 #define PREFS_x 0x1
@@ -104,7 +104,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	GtkSizeGroup * right;
 	GtkWidget * widget;
 	PangoFontDescription * bold;
-	char * q;
+	char const * q;
 	unsigned long id;
   
 	memset(&p, 0, sizeof(p));
