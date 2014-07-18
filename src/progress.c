@@ -174,7 +174,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	bold = pango_font_description_new();
 	pango_font_description_set_weight(bold, PANGO_WEIGHT_BOLD);
 	gtk_widget_modify_font(widget, bold);
-	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
 	if((q = g_filename_to_utf8(prefs->filename, -1, NULL, NULL, NULL))
@@ -182,7 +182,7 @@ static int _progress(Prefs * prefs, char * argv[])
 		q = prefs->filename;
 	widget = gtk_label_new(q);
 	gtk_label_set_ellipsize(GTK_LABEL(widget), PANGO_ELLIPSIZE_MIDDLE);
-	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(right, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
@@ -194,11 +194,11 @@ static int _progress(Prefs * prefs, char * argv[])
 #endif
 	widget = gtk_label_new("Done: ");
 	gtk_widget_modify_font(widget, bold);
-	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
 	p.done = gtk_label_new("0.0 kB");
-	gtk_misc_set_alignment(GTK_MISC(p.done), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(p.done), 0.0, 0.5);
 	gtk_size_group_add_widget(right, p.done);
 	gtk_box_pack_start(GTK_BOX(hbox), p.done, TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 4);
@@ -210,12 +210,12 @@ static int _progress(Prefs * prefs, char * argv[])
 #endif
 	widget = gtk_label_new("Remaining: ");
 	gtk_widget_modify_font(widget, bold);
-	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
 	p.remaining = gtk_label_new("");
 	g_timeout_add(250, _progress_timeout, &p);
-	gtk_misc_set_alignment(GTK_MISC(p.remaining), 0.0, 0.0);
+	gtk_misc_set_alignment(GTK_MISC(p.remaining), 0.0, 0.5);
 	gtk_size_group_add_widget(right, p.remaining);
 	gtk_box_pack_start(GTK_BOX(hbox), p.remaining, TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 4);
@@ -226,7 +226,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	{
 		hbox = gtk_hbox_new(FALSE, 0);
 		widget = gtk_label_new(prefs->prefix);
-		gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+		gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 		gtk_size_group_add_widget(left, widget);
 		gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
 		gtk_size_group_add_widget(right, p.progress);
