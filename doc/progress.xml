@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY firstname "Pierre">
+	<!ENTITY surname   "Pronchery">
+	<!ENTITY username  "khorben">
+	<!ENTITY email     "khorben@defora.org">
+	<!ENTITY section   "1">
+	<!ENTITY title     "Accessories User Manual">
+	<!ENTITY package   "DeforaOS Accessories">
+	<!ENTITY name      "progress">
+	<!ENTITY purpose   "Generic progress bar utility">
+]>
+<refentry>
+	<refentryinfo>
+		<title>&title;</title>
+		<productname>&package;</productname>
+		<authorgroup>
+			<author>
+				<firstname>&firstname;</firstname>
+				<surname>&surname;</surname>
+				<contrib>Code and documentation.</contrib>
+				<address>
+					<email>&email;</email>
+				</address>
+			</author>
+		</authorgroup>
+		<copyright>
+			<year>2014</year>
+			<holder>&firstname; &surname; &lt;&email;&gt;</holder>
+		</copyright>
+		<legalnotice>
+			<para>This manual page was written for the DeforaOS Project (and may be
+				used by others).</para>
+			<para>Permission is granted to copy, distribute and/or modify this
+				document under the terms of the GNU General Public License,
+				Version 3 as published by the Free Software Foundation.</para>
+		</legalnotice>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>&name;</refentrytitle>
+		<manvolnum>&section;</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>&name;</refname>
+		<refpurpose>&purpose;</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+		<cmdsynopsis>
+			<command>&name;</command>
+			<arg choice="opt"><option>-x</option></arg>
+			<arg choice="opt"><option>-e</option></arg>
+			<arg choice="opt"><option>-z</option></arg>
+			<arg choice="opt"><option>-b</option>
+				<replaceable>buffersize</replaceable></arg>
+			<arg choice="opt"><option>-f</option>
+				<replaceable>file</replaceable></arg>
+			<arg choice="opt"><option>-l</option>
+				<replaceable>length</replaceable></arg>
+			<arg choice="opt"><option>-p</option>
+				<replaceable>prefix</replaceable></arg>
+			<arg choice="opt"><option>-t</option>
+				<replaceable>title</replaceable></arg>
+			<arg choice="plain"><replaceable>command</replaceable></arg>
+			<arg rep="repeat"><replaceable>args</replaceable></arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1 id="description">
+		<title>Description</title>
+		<para><command>&name;</command> can be used to report on the progress of
+			Input/Output (I/O) operations, like when manipulating files and
+			devices. It expects data either from the standard input or from a file, and
+			forwards it over to a separate process through the standard input
+			again. It reports continuously on data throughput while doing so.</para>
+		<para>Additionally, it can be embedded within an existing window, like in the
+			notification area of a panel window.</para>
+	</refsect1>
+	<refsect1 id="options">
+		<title>Options</title>
+		<para>The following options are available:</para>
+		<variablelist>
+				<term><option>-b</option></term>
+				<listitem>
+					<para>Enforce the size of the intermediate buffer.</para>
+				</listitem>
+			<varlistentry>
+				<term><option>-e</option></term>
+				<listitem>
+					<para>Ignored for compatibility reasons.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-f</option></term>
+				<listitem>
+					<para>File to use for incoming data instead of the standard input.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-l</option></term>
+				<listitem>
+					<para>Specify or override the estimation of the data size.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-p</option></term>
+				<listitem>
+					<para>Text to display before the progress bar.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-t</option></term>
+				<listitem>
+					<para>Sets the title of the progress window.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-z</option></term>
+				<listitem>
+					<para>Uncompress the input on the fly using
+						<command>gunzip<manvolnum>1</manvolnum></command>.</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>A command to execute must be provided on the command line, with an
+			arbitrary number of arguments. It is then executed, with the incoming data
+			forwarded to this sub-process over the standard input.</para>
+	</refsect1>
+	<refsect1 id="bugs">
+		<title>Bugs</title>
+		<para>Issues can be listed and reported at <ulink
+				url="http://www.defora.org/os/project/bug_list/235/Accessories"/>.</para>
+	</refsect1>
+	<refsect1 id="see_also">
+		<title>See also</title>
+		<para>
+			<citerefentry>
+				<refentrytitle>dd</refentrytitle>
+				<manvolnum>1</manvolnum>
+			</citerefentry>,
+			<citerefentry>
+				<refentrytitle>gunzip</refentrytitle>
+				<manvolnum>1</manvolnum>
+			</citerefentry>,
+			<citerefentry>
+				<refentrytitle>panel-embed</refentrytitle>
+				<manvolnum>1</manvolnum>
+			</citerefentry>,
+			<citerefentry>
+				<refentrytitle>tar</refentrytitle>
+				<manvolnum>1</manvolnum>
+			</citerefentry>
+	</para>
+	</refsect1>
+</refentry>
+<!-- vim: set noet ts=1 sw=1 sts=1 tw=80: -->

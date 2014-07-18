@@ -1,6 +1,6 @@
 PACKAGE	= Accessories
 VERSION	= 0.0.3
-SUBDIRS	= src
+SUBDIRS	= doc src
 RM	= rm -f
 LN	= ln -f
 TAR	= tar -czvf
@@ -21,6 +21,12 @@ dist:
 	$(RM) -r -- $(PACKAGE)-$(VERSION)
 	$(LN) -s -- . $(PACKAGE)-$(VERSION)
 	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz -- \
+		$(PACKAGE)-$(VERSION)/doc/Makefile \
+		$(PACKAGE)-$(VERSION)/doc/docbook.sh \
+		$(PACKAGE)-$(VERSION)/doc/progress.css.xml \
+		$(PACKAGE)-$(VERSION)/doc/progress.xml \
+		$(PACKAGE)-$(VERSION)/doc/manual.css.xml \
+		$(PACKAGE)-$(VERSION)/doc/project.conf \
 		$(PACKAGE)-$(VERSION)/src/compare.c \
 		$(PACKAGE)-$(VERSION)/src/fontsel.c \
 		$(PACKAGE)-$(VERSION)/src/progress.c \
