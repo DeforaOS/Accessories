@@ -31,6 +31,10 @@
 # include <gtk/gtkx.h>
 #endif
 
+#ifndef PROGNAME
+# define PROGNAME "progress"
+#endif
+
 
 /* types */
 typedef struct _Prefs
@@ -273,7 +277,7 @@ static int _error_do(Progress * progress, char const * message,
 	progress->ret = ret;
 	if(ret < 0)
 	{
-		fputs("progress: ", stderr);
+		fputs(PROGNAME ": ", stderr);
 		perror(message);
 		return -ret;
 	}
@@ -600,9 +604,9 @@ static void _timeout_remaining(Progress * progress, guint64 rate)
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: progress [-x][-ez][-b buffer size][-f file][-l length]"
+	fputs("Usage: " PROGNAME " [-x][-ez][-b buffer size][-f file][-l length]"
 "[-p prefix]\n"
-"                [-t title] cmd [args...]\n"
+"                [-t title] command [args...]\n"
 "  -e	Ignored (for compatibility)\n"
 "  -x	Start in embedded mode\n", stderr);
 	return 1;
