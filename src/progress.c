@@ -224,7 +224,11 @@ static int _progress(Prefs * prefs, char * argv[])
 	p.pulse = 0;
 	if(prefs->prefix != NULL)
 	{
+#if GTK_CHECK_VERSION(3, 0, 0)
+		hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
 		hbox = gtk_hbox_new(FALSE, 0);
+#endif
 		widget = gtk_label_new(prefs->prefix);
 		gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 		gtk_size_group_add_widget(left, widget);
