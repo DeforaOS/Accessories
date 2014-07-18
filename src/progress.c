@@ -42,6 +42,7 @@ typedef struct _Prefs
 	int flags;
 	ssize_t bufsiz;
 	char const * filename;
+	char const * prefix;
 	char const * title;
 	size_t length;
 } Prefs;
@@ -221,7 +222,19 @@ static int _progress(Prefs * prefs, char * argv[])
 	/* progress */
 	p.progress = gtk_progress_bar_new();
 	p.pulse = 0;
-	gtk_box_pack_start(GTK_BOX(vbox), p.progress, TRUE, TRUE, 4);
+	if(prefs->prefix != NULL)
+	{
+		hbox = gtk_hbox_new(FALSE, 0);
+		widget = gtk_label_new(prefs->prefix);
+		gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.0);
+		gtk_size_group_add_widget(left, widget);
+		gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
+		gtk_size_group_add_widget(right, p.progress);
+		gtk_box_pack_start(GTK_BOX(hbox), p.progress, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 4);
+	}
+	else
+		gtk_box_pack_start(GTK_BOX(vbox), p.progress, TRUE, TRUE, 4);
 	/* cancel */
 #if GTK_CHECK_VERSION(3, 0, 0)
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -623,7 +636,7 @@ int main(int argc, char * argv[])
 	memset(&prefs, 0, sizeof(prefs));
 	prefs.bufsiz = 65536;
 	gtk_init(&argc, &argv);
-	while((o = getopt(argc, argv, "b:ef:l:t:xz")) != -1)
+	while((o = getopt(argc, argv, "b:ef:l:p:t:xz")) != -1)
 		switch(o)
 		{
 			case 'b':
@@ -641,6 +654,9 @@ int main(int argc, char * argv[])
 				prefs.length = strtol(optarg, &p, 0);
 				if(optarg[0] == '\0' || *p != '\0')
 					return _usage();
+				break;
+			case 'p':
+				prefs.prefix = optarg;
 				break;
 			case 't':
 				prefs.title = optarg;
