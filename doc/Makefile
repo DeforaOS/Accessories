@@ -17,6 +17,7 @@ progress.html: progress.css.xml progress.xml manual.css.xml
 
 clean:
 	$(RM) -- $(progress.1_OBJS) $(progress.html_OBJS)
+	./docbook.sh -c -P "$(PREFIX)" -- "progress.1"
 	./docbook.sh -c -P "$(PREFIX)" -- "progress.html"
 
 distclean: clean
