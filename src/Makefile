@@ -1,4 +1,5 @@
-TARGETS	= compare fontsel progress
+TARGETS	= $(OBJDIR)compare $(OBJDIR)fontsel $(OBJDIR)progress
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -17,35 +18,35 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-compare_OBJS = compare.o
+compare_OBJS = $(OBJDIR)compare.o
 compare_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 compare_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-compare: $(compare_OBJS)
-	$(CC) -o compare $(compare_OBJS) $(compare_LDFLAGS)
+$(OBJDIR)compare: $(compare_OBJS)
+	$(CC) -o $(OBJDIR)compare $(compare_OBJS) $(compare_LDFLAGS)
 
-fontsel_OBJS = fontsel.o
+fontsel_OBJS = $(OBJDIR)fontsel.o
 fontsel_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 fontsel_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-fontsel: $(fontsel_OBJS)
-	$(CC) -o fontsel $(fontsel_OBJS) $(fontsel_LDFLAGS)
+$(OBJDIR)fontsel: $(fontsel_OBJS)
+	$(CC) -o $(OBJDIR)fontsel $(fontsel_OBJS) $(fontsel_LDFLAGS)
 
-progress_OBJS = progress.o
+progress_OBJS = $(OBJDIR)progress.o
 progress_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 progress_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-progress: $(progress_OBJS)
-	$(CC) -o progress $(progress_OBJS) $(progress_LDFLAGS)
+$(OBJDIR)progress: $(progress_OBJS)
+	$(CC) -o $(OBJDIR)progress $(progress_OBJS) $(progress_LDFLAGS)
 
-compare.o: compare.c
-	$(CC) $(compare_CFLAGS) -c compare.c
+$(OBJDIR)compare.o: compare.c
+	$(CC) $(compare_CFLAGS) -o $(OBJDIR)compare.o -c compare.c
 
-fontsel.o: fontsel.c
-	$(CC) $(fontsel_CFLAGS) -c fontsel.c
+$(OBJDIR)fontsel.o: fontsel.c
+	$(CC) $(fontsel_CFLAGS) -o $(OBJDIR)fontsel.o -c fontsel.c
 
-progress.o: progress.c
-	$(CC) $(progress_CFLAGS) -c progress.c
+$(OBJDIR)progress.o: progress.c
+	$(CC) $(progress_CFLAGS) -o $(OBJDIR)progress.o -c progress.c
 
 clean:
 	$(RM) -- $(compare_OBJS) $(fontsel_OBJS) $(progress_OBJS)
@@ -55,11 +56,11 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 compare $(DESTDIR)$(BINDIR)/compare
+	$(INSTALL) -m 0755 $(OBJDIR)compare $(DESTDIR)$(BINDIR)/compare
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 fontsel $(DESTDIR)$(BINDIR)/fontsel
+	$(INSTALL) -m 0755 $(OBJDIR)fontsel $(DESTDIR)$(BINDIR)/fontsel
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 progress $(DESTDIR)$(BINDIR)/progress
+	$(INSTALL) -m 0755 $(OBJDIR)progress $(DESTDIR)$(BINDIR)/progress
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(BINDIR)/compare

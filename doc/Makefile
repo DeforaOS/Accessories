@@ -1,4 +1,5 @@
-TARGETS	= progress.1 progress.html
+TARGETS	= $(OBJDIR)progress.1 $(OBJDIR)progress.html
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f
@@ -9,11 +10,11 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-progress.1: progress.xml
-	./docbook.sh -P "$(PREFIX)" -- "progress.1"
+$(OBJDIR)progress.1: progress.xml
+	./docbook.sh -P "$(PREFIX)" -- "$(OBJDIR)progress.1"
 
-progress.html: progress.css.xml progress.xml manual.css.xml
-	./docbook.sh -P "$(PREFIX)" -- "progress.html"
+$(OBJDIR)progress.html: progress.css.xml progress.xml manual.css.xml
+	./docbook.sh -P "$(PREFIX)" -- "$(OBJDIR)progress.html"
 
 clean:
 	$(RM) -- $(progress.1_OBJS) $(progress.html_OBJS)
@@ -24,8 +25,8 @@ distclean: clean
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
-	./docbook.sh -P "$(DESTDIR)$(PREFIX)" -i -- "progress.1"
-	./docbook.sh -P "$(DESTDIR)$(PREFIX)" -i -- "progress.html"
+	./docbook.sh -P "$(DESTDIR)$(PREFIX)" -i -- "$(OBJDIR)progress.1"
+	./docbook.sh -P "$(DESTDIR)$(PREFIX)" -i -- "$(OBJDIR)progress.html"
 
 uninstall:
 	./docbook.sh -P "$(DESTDIR)$(PREFIX)" -u -- "progress.1"
