@@ -80,10 +80,12 @@
 		<title>Options</title>
 		<para>The following options are available:</para>
 		<variablelist>
+			<varlistentry>
 				<term><option>-b</option></term>
 				<listitem>
 					<para>Enforce the size of the intermediate buffer.</para>
 				</listitem>
+			</varlistentry>
 			<varlistentry>
 				<term><option>-e</option></term>
 				<listitem>
