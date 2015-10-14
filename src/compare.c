@@ -31,6 +31,9 @@ typedef struct _Compare
 {
 	GtkWidget * entry1;
 	GtkWidget * entry2;
+#if GTK_CHECK_VERSION(2, 18, 0)
+	GtkWidget * infobar;
+#endif
 	GtkWidget * label;
 } Compare;
 
@@ -80,7 +83,16 @@ static int _compare(char const * string1, char const * string2)
 	gtk_box_pack_start(GTK_BOX(vbox), compare.entry2, FALSE, TRUE, 0);
 	compare.label = gtk_label_new(NULL);
 	gtk_misc_set_alignment(GTK_MISC(compare.label), 0.0, 0.5);
+#if GTK_CHECK_VERSION(2, 18, 0)
+	compare.infobar = gtk_info_bar_new();
+	widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(compare.infobar));
+	gtk_info_bar_set_message_type(GTK_INFO_BAR(compare.infobar),
+			GTK_MESSAGE_OTHER);
+	gtk_container_add(GTK_CONTAINER(widget), compare.label);
+	gtk_box_pack_start(GTK_BOX(vbox), compare.infobar, FALSE, TRUE, 0);
+#else
 	gtk_box_pack_start(GTK_BOX(vbox), compare.label, FALSE, TRUE, 0);
+#endif
 #if GTK_CHECK_VERSION(3, 0, 0)
 	bbox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
 #else
@@ -115,15 +127,25 @@ static void _compare_on_changed(gpointer data)
 	GtkLabel * label = GTK_LABEL(compare->label);
 	char const * string1;
 	char const * string2;
+	GtkMessageType type = GTK_MESSAGE_OTHER;
 
 	string1 = gtk_entry_get_text(GTK_ENTRY(compare->entry1));
 	string2 = gtk_entry_get_text(GTK_ENTRY(compare->entry2));
 	if(string1[0] == '\0' && string2[0] == '\0')
 		gtk_label_set_text(label, "");
 	else if(strcmp(string1, string2) == 0)
+	{
 		gtk_label_set_text(label, "The strings MATCH");
+		type = GTK_MESSAGE_INFO;
+	}
 	else
+	{
 		gtk_label_set_text(label, "The strings do NOT match");
+		type = GTK_MESSAGE_ERROR;
+	}
+#if GTK_CHECK_VERSION(2, 18, 0)
+	gtk_info_bar_set_message_type(GTK_INFO_BAR(compare->infobar), type);
+#endif
 }
 
 
