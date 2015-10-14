@@ -19,6 +19,10 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
+#ifndef PROGNAME
+# define PROGNAME "compare"
+#endif
+
 
 /* Compare */
 /* private */
@@ -98,7 +102,7 @@ static int _compare(char const * string1, char const * string2)
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: compare [string1 [string2]]\n", stderr);
+	fputs("Usage: " PROGNAME " [string1 [string2]]\n", stderr);
 	return 1;
 }
 
