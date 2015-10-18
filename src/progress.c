@@ -166,7 +166,6 @@ static int _progress(Prefs * prefs, char * argv[])
 	if((prefs->flags & PREFS_x) == 0)
 	{
 		p.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-		gtk_window_set_default_size(GTK_WINDOW(p.window), 300, 100);
 #if GTK_CHECK_VERSION(3, 0, 0) && !GTK_CHECK_VERSION(3, 14, 0)
 		gtk_window_set_has_resize_grip(GTK_WINDOW(p.window), FALSE);
 #endif
