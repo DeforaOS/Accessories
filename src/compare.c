@@ -115,7 +115,14 @@ static int _compare(char const * string1, char const * string2)
 	bbox = gtk_hbutton_box_new();
 #endif
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
+#if GTK_CHECK_VERSION(3, 10, 0)
+	widget = gtk_button_new_with_label(_("Close"));
+	gtk_button_set_image(GTK_BUTTON(widget),
+			gtk_image_new_from_icon_name(GTK_STOCK_CLOSE,
+				GTK_ICON_SIZE_BUTTON));
+#else
 	widget = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+#endif
 	g_signal_connect_swapped(widget, "clicked", G_CALLBACK(
 				_compare_on_close), window);
 	gtk_container_add(GTK_CONTAINER(bbox), widget);

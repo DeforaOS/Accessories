@@ -278,7 +278,14 @@ static int _progress(Prefs * prefs, char * argv[])
 #else
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
+#if GTK_CHECK_VERSION(3, 10, 0)
+	widget = gtk_button_new_with_label(_("Cancel"));
+	gtk_button_set_image(GTK_BUTTON(widget),
+			gtk_image_new_from_icon_name(GTK_STOCK_CANCEL,
+				GTK_ICON_SIZE_BUTTON));
+#else
 	widget = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
+#endif
 	g_signal_connect(G_OBJECT(widget), "clicked", G_CALLBACK(
 				_progress_cancel), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
