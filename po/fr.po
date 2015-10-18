@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 21:56+0200\n"
+"POT-Creation-Date: 2015-10-18 22:06+0200\n"
 "PO-Revision-Date: 2015-10-18 21:32+0200\n"
 "Last-Translator: Pierre Pronchery <khorben@defora.org>\n"
 "Language-Team: French\n"
@@ -42,3 +42,48 @@ msgstr "Liste des fontes"
 #, c-format
 msgid "Usage: %s\n"
 msgstr "Usage: %s\n"
+
+#: ../src/progress.c:174
+msgid "Progress"
+msgstr "Progression"
+
+#: ../src/progress.c:194
+msgid "File: "
+msgstr "Fichier : "
+
+#: ../src/progress.c:216
+msgid "Done: "
+msgstr "Effectué : "
+
+#: ../src/progress.c:221
+msgid "0.0 kB"
+msgstr "0.0 ko"
+
+#: ../src/progress.c:232
+msgid "Remaining: "
+msgstr "Restant : "
+
+#: ../src/progress.c:327 ../src/progress.c:331
+msgid "Error"
+msgstr "Erreur"
+
+#: ../src/progress.c:620
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: ../src/progress.c:638
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#: ../src/progress.c:655
+#, c-format
+msgid ""
+"Usage: %s [-x][-ez][-b buffer size][-f file][-l length][-p prefix]\n"
+"                [-t title] command [args...]\n"
+"  -e\tIgnored (for compatibility)\n"
+"  -x\tStart in embedded mode\n"
+msgstr ""
+"Usage: %s [-x][-ez][-b taille tampon][-f fichier][-l length][-p préfixe]\n"
+"                [-t titre] commande [arguments...]\n"
+"  -e\tIgnoré (compatibilité)\n"
+"  -x\tDémarrer en mode embarqué\n"

@@ -26,13 +26,27 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <locale.h>
+#include <libintl.h>
 #include <gtk/gtk.h>
 #if GTK_CHECK_VERSION(3, 0, 0)
 # include <gtk/gtkx.h>
 #endif
+#include "../config.h"
+#define _(string) gettext(string)
 
+/* constants */
 #ifndef PROGNAME
-# define PROGNAME "progress"
+# define PROGNAME	"progress"
+#endif
+#ifndef PREFIX
+# define PREFIX		"/usr/local"
+#endif
+#ifndef DATADIR
+# define DATADIR	PREFIX "/share"
+#endif
+#ifndef LOCALEDIR
+# define LOCALEDIR	DATADIR "/locale"
 #endif
 
 
@@ -79,7 +93,14 @@ typedef struct _Progress
 	int pulse;			/* tells when to pulse	*/
 } Progress;
 
+
+/* prototypes */
+static int _error(char const * message, int ret);
+static int _usage(void);
+
+
 /* functions */
+/* progress */
 static int _progress_error(Progress * progress, char const * message, int ret);
 static int _progress_gerror(Progress * progress, char const * message,
 		GError * error, int ret);
@@ -150,7 +171,7 @@ static int _progress(Prefs * prefs, char * argv[])
 		gtk_window_set_has_resize_grip(GTK_WINDOW(p.window), FALSE);
 #endif
 		gtk_window_set_title(GTK_WINDOW(p.window), prefs->title != NULL
-				? prefs->title : "Progress");
+				? prefs->title : _("Progress"));
 		g_signal_connect_swapped(p.window, "delete-event", G_CALLBACK(
 					_progress_closex), p.window);
 	}
@@ -170,7 +191,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	left = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 	right = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 	/* file */
-	widget = gtk_label_new("File: ");
+	widget = gtk_label_new(_("File: "));
 	bold = pango_font_description_new();
 	pango_font_description_set_weight(bold, PANGO_WEIGHT_BOLD);
 	gtk_widget_modify_font(widget, bold);
@@ -192,12 +213,12 @@ static int _progress(Prefs * prefs, char * argv[])
 #else
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
-	widget = gtk_label_new("Done: ");
+	widget = gtk_label_new(_("Done: "));
 	gtk_widget_modify_font(widget, bold);
 	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
-	p.done = gtk_label_new("0.0 kB");
+	p.done = gtk_label_new(_("0.0 kB"));
 	gtk_misc_set_alignment(GTK_MISC(p.done), 0.0, 0.5);
 	gtk_size_group_add_widget(right, p.done);
 	gtk_box_pack_start(GTK_BOX(hbox), p.done, TRUE, TRUE, 0);
@@ -208,7 +229,7 @@ static int _progress(Prefs * prefs, char * argv[])
 #else
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
-	widget = gtk_label_new("Remaining: ");
+	widget = gtk_label_new(_("Remaining: "));
 	gtk_widget_modify_font(widget, bold);
 	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
@@ -303,11 +324,11 @@ static int _error_do(Progress * progress, char const * message,
 			GTK_DIALOG_DESTROY_WITH_PARENT,
 			GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
 #if GTK_CHECK_VERSION(2, 6, 0)
-			"%s", "Error");
+			"%s", _("Error"));
 	gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
 #endif
 			"%s: %s", message, error);
-	gtk_window_set_title(GTK_WINDOW(dialog), "Error");
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 	return ret;
@@ -595,7 +616,8 @@ static void _timeout_remaining(Progress * progress, guint64 rate)
 
 	if(progress->prefs->length == 0 || rate == 0)
 	{
-		gtk_label_set_text(GTK_LABEL(progress->remaining), "Unknown");
+		gtk_label_set_text(GTK_LABEL(progress->remaining),
+				_("Unknown"));
 		return;
 	}
 	remaining = (progress->prefs->length - progress->cnt) / rate;
@@ -613,19 +635,28 @@ static void _timeout_remaining(Progress * progress, guint64 rate)
 		tm.tm_hour = tm.tm_min / 60;
 		tm.tm_min = tm.tm_min - (tm.tm_hour * 60);
 	}
-	strftime(buf, sizeof(buf), "%H:%M:%S", &tm);
+	strftime(buf, sizeof(buf), _("%H:%M:%S"), &tm);
 	gtk_label_set_text(GTK_LABEL(progress->remaining), buf);
+}
+
+
+/* error */
+static int _error(char const * message, int ret)
+{
+	fputs(PROGNAME ": ", stderr);
+	perror(message);
+	return ret;
 }
 
 
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: " PROGNAME " [-x][-ez][-b buffer size][-f file][-l length]"
+	fprintf(stderr, _("Usage: %s [-x][-ez][-b buffer size][-f file][-l length]"
 "[-p prefix]\n"
 "                [-t title] command [args...]\n"
 "  -e	Ignored (for compatibility)\n"
-"  -x	Start in embedded mode\n", stderr);
+"  -x	Start in embedded mode\n"), PROGNAME);
 	return 1;
 }
 
@@ -639,6 +670,10 @@ int main(int argc, char * argv[])
 
 	memset(&prefs, 0, sizeof(prefs));
 	prefs.bufsiz = 65536;
+	if(setlocale(LC_ALL, "") == NULL)
+		_error("setlocale", 1);
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
 	gtk_init(&argc, &argv);
 	while((o = getopt(argc, argv, "b:ef:l:p:t:xz")) != -1)
 		switch(o)
