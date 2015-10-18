@@ -16,11 +16,26 @@
 
 
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
+#include <locale.h>
+#include <libintl.h>
 #include <gtk/gtk.h>
+#include "../config.h"
+#define _(string) gettext(string)
 
+/* constants */
 #ifndef PROGNAME
-# define PROGNAME "compare"
+# define PROGNAME	"compare"
+#endif
+#ifndef PREFIX
+# define PREFIX		"/usr/local"
+#endif
+#ifndef DATADIR
+# define DATADIR	PREFIX "/share"
+#endif
+#ifndef LOCALEDIR
+# define LOCALEDIR	DATADIR "/locale"
 #endif
 
 
@@ -41,6 +56,7 @@ typedef struct _Compare
 /* prototypes */
 static int _compare(char const * string1, char const * string2);
 
+static int _error(char const * message, int ret);
 static int _usage(void);
 
 /* callbacks */
@@ -61,7 +77,7 @@ static int _compare(char const * string1, char const * string2)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
-	gtk_window_set_title(GTK_WINDOW(window), "Compare strings");
+	gtk_window_set_title(GTK_WINDOW(window), _("Compare strings"));
 	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
 				_compare_on_closex), window);
 #if GTK_CHECK_VERSION(3, 0, 0)
@@ -111,10 +127,19 @@ static int _compare(char const * string1, char const * string2)
 }
 
 
+/* error */
+static int _error(char const * message, int ret)
+{
+	fputs(PROGNAME ": ", stderr);
+	perror(message);
+	return ret;
+}
+
+
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: " PROGNAME " [string1 [string2]]\n", stderr);
+	fprintf(stderr, _("Usage: %s [string1 [string2]]\n"), PROGNAME);
 	return 1;
 }
 
@@ -135,12 +160,12 @@ static void _compare_on_changed(gpointer data)
 		gtk_label_set_text(label, "");
 	else if(strcmp(string1, string2) == 0)
 	{
-		gtk_label_set_text(label, "The strings MATCH");
+		gtk_label_set_text(label, _("The strings MATCH"));
 		type = GTK_MESSAGE_INFO;
 	}
 	else
 	{
-		gtk_label_set_text(label, "The strings do NOT match");
+		gtk_label_set_text(label, _("The strings do NOT match"));
 		type = GTK_MESSAGE_ERROR;
 	}
 #if GTK_CHECK_VERSION(2, 18, 0)
@@ -176,6 +201,10 @@ int main(int argc, char * argv[])
 	char const * string1;
 	char const * string2 = NULL;
 
+	if(setlocale(LC_ALL, "") == NULL)
+		_error("setlocale", 1);
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
 	gtk_init(&argc, &argv);
 	while((o = getopt(argc, argv, "")) != -1)
 		switch(o)
