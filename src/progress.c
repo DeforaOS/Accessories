@@ -150,7 +150,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	if(gettimeofday(&p.tv, NULL) != 0)
 		return _progress_error(&p, "gettimeofday", 1);
 	if(prefs->filename == NULL)
-		prefs->filename = "Standard input";
+		prefs->filename = _("Standard input");
 	else if((p.fd = open(prefs->filename, O_RDONLY)) < 0)
 		return _progress_error(&p, prefs->filename, 1);
 	else if(fstat(p.fd, &st) == 0 && S_ISREG(st.st_mode))
@@ -559,16 +559,16 @@ static void _timeout_done(Progress * progress, guint64 * rate)
 	double cnt = progress->cnt / 1024;
 	double total = progress->prefs->length / 1024;
 	char buf[48];
-	char const * dunit = "kB";
+	char const * dunit = _("kB");
 	struct timeval tv;
 	double r;
-	char const * sunit = "kB";
+	char const * sunit = _("kB");
 
 	if(progress->prefs->length > 1048576 || progress->cnt > 1048576)
 	{
 		cnt /= 1024;
 		total /= 1024;
-		dunit = "MB";
+		dunit = _("MB");
 	}
 	if(gettimeofday(&tv, NULL) != 0)
 	{
@@ -588,15 +588,15 @@ static void _timeout_done(Progress * progress, guint64 * rate)
 		if((r = progress->cnt / r) > 1024.0)
 		{
 			r /= 1024.0;
-			sunit = "MB";
+			sunit = _("MB");
 		}
 	}
 	if(progress->prefs->length == 0)
-		snprintf(buf, sizeof(buf), "%.1f %s (%.1f %s/s)", cnt, dunit,
+		snprintf(buf, sizeof(buf), _("%.1f %s (%.1f %s/s)"), cnt, dunit,
 				r, sunit);
 	else
-		snprintf(buf, sizeof(buf), "%.1f of %.1f %s (%.1f %s/s)", cnt,
-				total, dunit, r, sunit);
+		snprintf(buf, sizeof(buf), _("%.1f of %.1f %s (%.1f %s/s)"),
+				cnt, total, dunit, r, sunit);
 	gtk_label_set_text(GTK_LABEL(progress->done), buf);
 }
 
@@ -652,8 +652,8 @@ static int _error(char const * message, int ret)
 /* usage */
 static int _usage(void)
 {
-	fprintf(stderr, _("Usage: %s [-x][-ez][-b buffer size][-f file][-l length]"
-"[-p prefix]\n"
+	fprintf(stderr, _("Usage: %s [-x][-ez][-b buffer size][-f file]"
+"[-l length][-p prefix]\n"
 "                [-t title] command [args...]\n"
 "  -e	Ignored (for compatibility)\n"
 "  -x	Start in embedded mode\n"), PROGNAME);
