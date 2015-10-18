@@ -194,7 +194,11 @@ static int _progress(Prefs * prefs, char * argv[])
 	widget = gtk_label_new(_("File: "));
 	bold = pango_font_description_new();
 	pango_font_description_set_weight(bold, PANGO_WEIGHT_BOLD);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	gtk_widget_override_font(widget, bold);
+#else
 	gtk_widget_modify_font(widget, bold);
+#endif
 	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
@@ -214,7 +218,11 @@ static int _progress(Prefs * prefs, char * argv[])
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
 	widget = gtk_label_new(_("Done: "));
+#if GTK_CHECK_VERSION(3, 0, 0)
+	gtk_widget_override_font(widget, bold);
+#else
 	gtk_widget_modify_font(widget, bold);
+#endif
 	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
@@ -230,7 +238,11 @@ static int _progress(Prefs * prefs, char * argv[])
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
 	widget = gtk_label_new(_("Remaining: "));
+#if GTK_CHECK_VERSION(3, 0, 0)
+	gtk_widget_override_font(widget, bold);
+#else
 	gtk_widget_modify_font(widget, bold);
+#endif
 	gtk_misc_set_alignment(GTK_MISC(widget), 0.0, 0.5);
 	gtk_size_group_add_widget(left, widget);
 	gtk_box_pack_start(GTK_BOX(hbox), widget, FALSE, TRUE, 0);
