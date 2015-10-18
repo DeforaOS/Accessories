@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 21:40+0200\n"
+"POT-Creation-Date: 2015-10-18 21:56+0200\n"
 "PO-Revision-Date: 2015-10-18 21:32+0200\n"
 "Last-Translator: Pierre Pronchery <khorben@defora.org>\n"
 "Language-Team: French\n"
@@ -33,3 +33,12 @@ msgstr "Les chaînes CORRESPONDENT"
 #: ../src/compare.c:168
 msgid "The strings do NOT match"
 msgstr "Les chaînes ne correspondent PAS"
+
+#: ../src/fontsel.c:61
+msgid "Font browser"
+msgstr "Liste des fontes"
+
+#: ../src/fontsel.c:97
+#, c-format
+msgid "Usage: %s\n"
+msgstr "Usage: %s\n"

@@ -17,10 +17,38 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <locale.h>
+#include <libintl.h>
 #include <gtk/gtk.h>
+#include "../config.h"
+#define _(string) gettext(string)
+
+/* constants */
+#ifndef PROGNAME
+# define PROGNAME	"fontsel"
+#endif
+#ifndef PREFIX
+# define PREFIX		"/usr/local"
+#endif
+#ifndef DATADIR
+# define DATADIR	PREFIX "/share"
+#endif
+#ifndef LOCALEDIR
+# define LOCALEDIR	DATADIR "/locale"
+#endif
 
 
 /* Fontsel */
+/* private */
+/* prototypes */
+static int _fontsel(void);
+
+static int _error(char const * message, int ret);
+static int _usage(void);
+
+
+/* functions */
+/* fontsel */
 static gboolean _fontsel_on_closex(gpointer data);
 
 static int _fontsel(void)
@@ -30,7 +58,7 @@ static int _fontsel(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
-	gtk_window_set_title(GTK_WINDOW(window), "Font browser");
+	gtk_window_set_title(GTK_WINDOW(window), _("Font browser"));
 	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
 				_fontsel_on_closex), window);
 #if GTK_CHECK_VERSION(3, 2, 0)
@@ -54,10 +82,19 @@ static gboolean _fontsel_on_closex(gpointer data)
 }
 
 
+/* error */
+static int _error(char const * message, int ret)
+{
+	fputs(PROGNAME ": ", stderr);
+	perror(message);
+	return ret;
+}
+
+
 /* usage */
 static int _usage(void)
 {
-	fputs("Usage: fontsel\n", stderr);
+	fprintf(stderr, _("Usage: %s\n"), PROGNAME);
 	return 1;
 }
 
@@ -67,6 +104,10 @@ int main(int argc, char * argv[])
 {
 	int o;
 
+	if(setlocale(LC_ALL, "") == NULL)
+		_error("setlocale", 1);
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
 	gtk_init(&argc, &argv);
 	while((o = getopt(argc, argv, "")) != -1)
 		switch(o)
