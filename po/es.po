@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 22:06+0200\n"
+"POT-Creation-Date: 2015-10-18 22:56+0200\n"
 "PO-Revision-Date: 2015-10-18 21:32+0200\n"
 "Last-Translator: Pierre Pronchery <khorben@defora.org>\n"
 "Language-Team: Spanish\n"
@@ -43,6 +43,10 @@ msgstr ""
 msgid "Usage: %s\n"
 msgstr ""
 
+#: ../src/progress.c:153
+msgid "Standard input"
+msgstr ""
+
 #: ../src/progress.c:174
 msgid "Progress"
 msgstr ""
@@ -65,6 +69,24 @@ msgstr ""
 
 #: ../src/progress.c:327 ../src/progress.c:331
 msgid "Error"
+msgstr ""
+
+#: ../src/progress.c:562 ../src/progress.c:565
+msgid "kB"
+msgstr ""
+
+#: ../src/progress.c:571 ../src/progress.c:591
+msgid "MB"
+msgstr ""
+
+#: ../src/progress.c:595
+#, c-format
+msgid "%.1f %s (%.1f %s/s)"
+msgstr ""
+
+#: ../src/progress.c:598
+#, c-format
+msgid "%.1f of %.1f %s (%.1f %s/s)"
 msgstr ""
 
 #: ../src/progress.c:620
