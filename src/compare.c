@@ -98,7 +98,11 @@ static int _compare(char const * string1, char const * string2)
 				_compare_on_changed), &compare);
 	gtk_box_pack_start(GTK_BOX(vbox), compare.entry2, FALSE, TRUE, 0);
 	compare.label = gtk_label_new(NULL);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	g_object_set(compare.label, "halign", GTK_ALIGN_START, NULL);
+#else
 	gtk_misc_set_alignment(GTK_MISC(compare.label), 0.0, 0.5);
+#endif
 #if GTK_CHECK_VERSION(2, 18, 0)
 	compare.infobar = gtk_info_bar_new();
 	widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(compare.infobar));
