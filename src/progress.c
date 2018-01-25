@@ -36,6 +36,12 @@
 #define _(string) gettext(string)
 
 /* constants */
+#ifndef PROGNAME_GUNZIP
+# define PROGNAME_GUNZIP	"gunzip"
+#endif
+#ifndef PROGNAME_GZIP
+# define PROGNAME_GZIP		"gzip"
+#endif
 #ifndef PROGNAME_PROGRESS
 # define PROGNAME_PROGRESS	"progress"
 #endif
@@ -439,9 +445,9 @@ static int _exec_gunzip(Progress * progress, char * argv[])
 	close(tmp.fds[0]);
 	if(dup2(tmp.fds[1], 1) == -1)
 		exit(_progress_error(NULL, "dup2", -1));
-	execlp("gunzip", "gunzip", NULL);
-	execlp("gzip", "gzip", "-d", NULL);
-	exit(_progress_error(NULL, "gunzip", -1));
+	execlp(PROGNAME_GUNZIP, PROGNAME_GUNZIP, NULL);
+	execlp(PROGNAME_GZIP, PROGNAME_GZIP, "-d", NULL);
+	exit(_progress_error(NULL, PROGNAME_GUNZIP, -1));
 	return 1;
 }
 
