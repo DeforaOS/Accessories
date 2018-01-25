@@ -36,17 +36,17 @@
 #define _(string) gettext(string)
 
 /* constants */
-#ifndef PROGNAME
-# define PROGNAME	"progress"
+#ifndef PROGNAME_PROGRESS
+# define PROGNAME_PROGRESS	"progress"
 #endif
 #ifndef PREFIX
-# define PREFIX		"/usr/local"
+# define PREFIX			"/usr/local"
 #endif
 #ifndef DATADIR
-# define DATADIR	PREFIX "/share"
+# define DATADIR		PREFIX "/share"
 #endif
 #ifndef LOCALEDIR
-# define LOCALEDIR	DATADIR "/locale"
+# define LOCALEDIR		DATADIR "/locale"
 #endif
 
 
@@ -352,7 +352,7 @@ static int _error_do(Progress * progress, char const * message,
 	progress->ret = ret;
 	if(ret < 0)
 	{
-		fputs(PROGNAME ": ", stderr);
+		fputs(PROGNAME_PROGRESS ": ", stderr);
 		perror(message);
 		return -ret;
 	}
@@ -680,7 +680,7 @@ static void _timeout_remaining(Progress * progress, guint64 rate)
 /* error */
 static int _error(char const * message, int ret)
 {
-	fputs(PROGNAME ": ", stderr);
+	fputs(PROGNAME_PROGRESS ": ", stderr);
 	perror(message);
 	return ret;
 }
@@ -693,7 +693,7 @@ static int _usage(void)
 "[-l length][-p prefix]\n"
 "                [-t title] command [args...]\n"
 "  -e	Ignored (for compatibility)\n"
-"  -x	Start in embedded mode\n"), PROGNAME);
+"  -x	Start in embedded mode\n"), PROGNAME_PROGRESS);
 	return 1;
 }
 
