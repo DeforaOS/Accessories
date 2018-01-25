@@ -576,6 +576,9 @@ static void _out_rate(Progress * p)
 	if(gtk_progress_bar_get_fraction(bar) == fraction)
 		return;
 	gtk_progress_bar_set_fraction(bar, fraction);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(p->progress), TRUE);
+#endif
 	snprintf(buf, sizeof(buf), "%.1f%%", fraction * 100);
 	gtk_progress_bar_set_text(bar, buf);
 }
