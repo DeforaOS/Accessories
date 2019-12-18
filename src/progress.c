@@ -368,7 +368,8 @@ static int _error_do(Progress * progress, char const * message,
 {
 	GtkWidget * dialog;
 
-	progress->ret = ret;
+	if(progress != NULL)
+		progress->ret = ret;
 	if(ret < 0)
 	{
 		fputs(PROGNAME_PROGRESS ": ", stderr);
