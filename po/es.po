@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 22:56+0200\n"
+"POT-Creation-Date: 2019-12-18 04:20+0100\n"
 "PO-Revision-Date: 2015-10-18 23:24+0100\n"
 "Last-Translator: Ana Carolina Rocha <carolina@defora.org>\n"
 "Language-Team: Spanish\n"
@@ -21,16 +21,20 @@ msgstr ""
 msgid "Compare strings"
 msgstr "Comparar cadena de caracteres"
 
-#: ../src/compare.c:142
+#: ../src/compare.c:123
+msgid "Close"
+msgstr ""
+
+#: ../src/compare.c:153
 #, c-format
 msgid "Usage: %s [string1 [string2]]\n"
 msgstr "Usage: %s [cadena1 [cadena2]]\n"
 
-#: ../src/compare.c:163
+#: ../src/compare.c:174
 msgid "The strings MATCH"
 msgstr "Las cadenas de caracteres COINCIDEN"
 
-#: ../src/compare.c:168
+#: ../src/compare.c:179
 msgid "The strings do NOT match"
 msgstr "Las cadenas de caracteres NO coinciden"
 
@@ -43,61 +47,65 @@ msgstr "Explorador de fuente"
 msgid "Usage: %s\n"
 msgstr "Usage: %s\n"
 
-#: ../src/progress.c:153
+#: ../src/progress.c:159
 msgid "Standard input"
 msgstr "Entrada estándar"
 
-#: ../src/progress.c:174
+#: ../src/progress.c:179
 msgid "Progress"
 msgstr "Progreso"
 
-#: ../src/progress.c:194
+#: ../src/progress.c:199
 msgid "File: "
 msgstr "Archivo:"
 
-#: ../src/progress.c:216
+#: ../src/progress.c:230
 msgid "Done: "
 msgstr "Finalizado:"
 
-#: ../src/progress.c:221
+#: ../src/progress.c:240
 msgid "0.0 kB"
 msgstr "0.0 kB"
 
-#: ../src/progress.c:232
+#: ../src/progress.c:255
 msgid "Remaining: "
 msgstr "Restante:"
 
-#: ../src/progress.c:327 ../src/progress.c:331
+#: ../src/progress.c:306
+msgid "Cancel"
+msgstr ""
+
+#: ../src/progress.c:370 ../src/progress.c:374
 msgid "Error"
 msgstr "Error"
 
-#: ../src/progress.c:562 ../src/progress.c:565
+#: ../src/progress.c:608 ../src/progress.c:611
 msgid "kB"
 msgstr "kB"
 
-#: ../src/progress.c:571 ../src/progress.c:591
+#: ../src/progress.c:617 ../src/progress.c:637
 msgid "MB"
 msgstr "MB"
 
-#: ../src/progress.c:595
+#: ../src/progress.c:641
 #, c-format
 msgid "%.1f %s (%.1f %s/s)"
 msgstr "%.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:598
+#: ../src/progress.c:644
 #, c-format
 msgid "%.1f of %.1f %s (%.1f %s/s)"
 msgstr "%.1f de %.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:620
+#: ../src/progress.c:666
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/progress.c:638
+#: ../src/progress.c:684
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../src/progress.c:655
+#: ../src/progress.c:701
 #, c-format
 msgid ""
 "Usage: %s [-x][-ez][-b buffer size][-f file][-l length][-p prefix]\n"
@@ -105,7 +113,8 @@ msgid ""
 "  -e\tIgnored (for compatibility)\n"
 "  -x\tStart in embedded mode\n"
 msgstr ""
-"Usage: %s [-x][-ez][-b tamaño de búfer][-f archivo][-l longitud][-p prefijo]\n"
+"Usage: %s [-x][-ez][-b tamaño de búfer][-f archivo][-l longitud][-p "
+"prefijo]\n"
 "                [-t título] comando [args...]\n"
 "  -e\tIgnorado (por compatibilidad)\n"
 "  -x\tIniciar en modo integrado\n"

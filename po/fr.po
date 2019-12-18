@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 22:56+0200\n"
+"POT-Creation-Date: 2019-12-18 04:20+0100\n"
 "PO-Revision-Date: 2015-10-18 21:32+0200\n"
 "Last-Translator: Pierre Pronchery <khorben@defora.org>\n"
 "Language-Team: French\n"
@@ -21,16 +21,20 @@ msgstr ""
 msgid "Compare strings"
 msgstr "Comparateur"
 
-#: ../src/compare.c:142
+#: ../src/compare.c:123
+msgid "Close"
+msgstr ""
+
+#: ../src/compare.c:153
 #, c-format
 msgid "Usage: %s [string1 [string2]]\n"
 msgstr "Usage: %s [chaîne1 [chaîne2]]\n"
 
-#: ../src/compare.c:163
+#: ../src/compare.c:174
 msgid "The strings MATCH"
 msgstr "Les chaînes CORRESPONDENT"
 
-#: ../src/compare.c:168
+#: ../src/compare.c:179
 msgid "The strings do NOT match"
 msgstr "Les chaînes ne correspondent PAS"
 
@@ -43,61 +47,65 @@ msgstr "Liste des fontes"
 msgid "Usage: %s\n"
 msgstr "Usage: %s\n"
 
-#: ../src/progress.c:153
+#: ../src/progress.c:159
 msgid "Standard input"
 msgstr "Entrée standard"
 
-#: ../src/progress.c:174
+#: ../src/progress.c:179
 msgid "Progress"
 msgstr "Progression"
 
-#: ../src/progress.c:194
+#: ../src/progress.c:199
 msgid "File: "
 msgstr "Fichier : "
 
-#: ../src/progress.c:216
+#: ../src/progress.c:230
 msgid "Done: "
 msgstr "Effectué : "
 
-#: ../src/progress.c:221
+#: ../src/progress.c:240
 msgid "0.0 kB"
 msgstr "0.0 ko"
 
-#: ../src/progress.c:232
+#: ../src/progress.c:255
 msgid "Remaining: "
 msgstr "Restant : "
 
-#: ../src/progress.c:327 ../src/progress.c:331
+#: ../src/progress.c:306
+msgid "Cancel"
+msgstr ""
+
+#: ../src/progress.c:370 ../src/progress.c:374
 msgid "Error"
 msgstr "Erreur"
 
-#: ../src/progress.c:562 ../src/progress.c:565
+#: ../src/progress.c:608 ../src/progress.c:611
 msgid "kB"
 msgstr "ko"
 
-#: ../src/progress.c:571 ../src/progress.c:591
+#: ../src/progress.c:617 ../src/progress.c:637
 msgid "MB"
 msgstr "Mo"
 
-#: ../src/progress.c:595
+#: ../src/progress.c:641
 #, c-format
 msgid "%.1f %s (%.1f %s/s)"
 msgstr "%.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:598
+#: ../src/progress.c:644
 #, c-format
 msgid "%.1f of %.1f %s (%.1f %s/s)"
 msgstr "%.1f de %.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:620
+#: ../src/progress.c:666
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: ../src/progress.c:638
+#: ../src/progress.c:684
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../src/progress.c:655
+#: ../src/progress.c:701
 #, c-format
 msgid ""
 "Usage: %s [-x][-ez][-b buffer size][-f file][-l length][-p prefix]\n"
