@@ -23,7 +23,7 @@ msgstr "Comparar cadena de caracteres"
 
 #: ../src/compare.c:123
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: ../src/compare.c:153
 #, c-format
@@ -73,7 +73,7 @@ msgstr "Restante:"
 
 #: ../src/progress.c:306
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: ../src/progress.c:370 ../src/progress.c:374
 msgid "Error"
