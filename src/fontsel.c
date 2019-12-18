@@ -62,35 +62,69 @@ static int _usage(void);
 
 /* functions */
 /* fontsel */
+static void _fontsel_on_close(gpointer data);
 static gboolean _fontsel_on_closex(gpointer data);
 
 static int _fontsel(void)
 {
 	GtkWidget * window;
-	GtkWidget * fontsel;
+	GtkWidget * vbox;
+	GtkWidget * bbox;
+	GtkWidget * widget;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
 	gtk_window_set_title(GTK_WINDOW(window), _("Font browser"));
 	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
 				_fontsel_on_closex), window);
-#if GTK_CHECK_VERSION(3, 2, 0)
-	fontsel = gtk_font_chooser_widget_new();
+#if GTK_CHECK_VERSION(3, 0, 0)
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
 #else
-	fontsel = gtk_font_selection_new();
+	vbox = gtk_vbox_new(FALSE, 4);
 #endif
-	gtk_container_add(GTK_CONTAINER(window), fontsel);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 4);
+#if GTK_CHECK_VERSION(3, 2, 0)
+	widget = gtk_font_chooser_widget_new();
+#else
+	widget = gtk_font_selection_new();
+#endif
+	gtk_container_add(GTK_CONTAINER(vbox), widget);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	bbox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+#else
+	bbox = gtk_hbutton_box_new();
+#endif
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
+#if GTK_CHECK_VERSION(3, 10, 0)
+	widget = gtk_button_new_with_label(_("Close"));
+	gtk_button_set_image(GTK_BUTTON(widget),
+			gtk_image_new_from_icon_name(GTK_STOCK_CLOSE,
+				GTK_ICON_SIZE_BUTTON));
+#else
+	widget = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+#endif
+	g_signal_connect_swapped(widget, "clicked", G_CALLBACK(
+				_fontsel_on_close), window);
+	gtk_container_add(GTK_CONTAINER(bbox), widget);
+	gtk_box_pack_end(GTK_BOX(vbox), bbox, FALSE, TRUE, 0);
+	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show_all(window);
 	gtk_main();
 	return 0;
+}
+
+static void _fontsel_on_close(gpointer data)
+{
+	GtkWidget * widget = data;
+
+	gtk_widget_hide(widget);
+	gtk_main_quit();
 }
 
 static gboolean _fontsel_on_closex(gpointer data)
 {
 	GtkWidget * widget = data;
 
-	gtk_widget_hide(widget);
-	gtk_main_quit();
+	_fontsel_on_close(widget);
 	return FALSE;
 }
 
