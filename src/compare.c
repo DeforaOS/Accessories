@@ -38,17 +38,17 @@
 #define _(string) gettext(string)
 
 /* constants */
-#ifndef PROGNAME
-# define PROGNAME	"compare"
+#ifndef PROGNAME_COMPARE
+# define PROGNAME_COMPARE	"compare"
 #endif
 #ifndef PREFIX
-# define PREFIX		"/usr/local"
+# define PREFIX			"/usr/local"
 #endif
 #ifndef DATADIR
-# define DATADIR	PREFIX "/share"
+# define DATADIR		PREFIX "/share"
 #endif
 #ifndef LOCALEDIR
-# define LOCALEDIR	DATADIR "/locale"
+# define LOCALEDIR		DATADIR "/locale"
 #endif
 
 
@@ -154,7 +154,7 @@ static int _compare(char const * string1, char const * string2)
 /* error */
 static int _error(char const * message, int ret)
 {
-	fputs(PROGNAME ": ", stderr);
+	fputs(PROGNAME_COMPARE ": ", stderr);
 	perror(message);
 	return ret;
 }
@@ -163,7 +163,7 @@ static int _error(char const * message, int ret)
 /* usage */
 static int _usage(void)
 {
-	fprintf(stderr, _("Usage: %s [string1 [string2]]\n"), PROGNAME);
+	fprintf(stderr, _("Usage: %s [string1 [string2]]\n"), PROGNAME_COMPARE);
 	return 1;
 }
 
