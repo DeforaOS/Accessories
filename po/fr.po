@@ -23,7 +23,7 @@ msgstr "Comparateur"
 
 #: ../src/compare.c:123
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: ../src/compare.c:153
 #, c-format
@@ -73,7 +73,7 @@ msgstr "Restant : "
 
 #: ../src/progress.c:306
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: ../src/progress.c:370 ../src/progress.c:374
 msgid "Error"
