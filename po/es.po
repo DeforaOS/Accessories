@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Accessories 0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 05:40+0100\n"
+"POT-Creation-Date: 2019-12-18 05:48+0100\n"
 "PO-Revision-Date: 2015-10-18 23:24+0100\n"
 "Last-Translator: Ana Carolina Rocha <carolina@defora.org>\n"
 "Language-Team: Spanish\n"
@@ -75,37 +75,37 @@ msgstr "Restante:"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/progress.c:383 ../src/progress.c:387
+#: ../src/progress.c:384 ../src/progress.c:388
 msgid "Error"
 msgstr "Error"
 
-#: ../src/progress.c:621 ../src/progress.c:624
+#: ../src/progress.c:622 ../src/progress.c:625
 msgid "kB"
 msgstr "kB"
 
-#: ../src/progress.c:630 ../src/progress.c:650
+#: ../src/progress.c:631 ../src/progress.c:651
 msgid "MB"
 msgstr "MB"
 
-#: ../src/progress.c:654
+#: ../src/progress.c:655
 #, c-format
 msgid "%.1f %s (%.1f %s/s)"
 msgstr "%.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:657
+#: ../src/progress.c:658
 #, c-format
 msgid "%.1f of %.1f %s (%.1f %s/s)"
 msgstr "%.1f de %.1f %s (%.1f %s/s)"
 
-#: ../src/progress.c:679
+#: ../src/progress.c:680
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/progress.c:697
+#: ../src/progress.c:698
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../src/progress.c:714
+#: ../src/progress.c:715
 #, c-format
 msgid ""
 "Usage: %s [-x][-ez][-b buffer size][-f file][-l length][-p prefix]\n"
