@@ -42,7 +42,9 @@
 #include <locale.h>
 #include <libintl.h>
 #include <gtk/gtk.h>
-#if GTK_CHECK_VERSION(3, 0, 0)
+#if GTK_CHECK_VERSION(4, 0, 0)
+# include <gdk/x11/gdkx.h>
+#elif GTK_CHECK_VERSION(3, 0, 0)
 # include <gtk/gtkx.h>
 #endif
 #include "../config.h"
@@ -184,7 +186,11 @@ static int _progress(Prefs * prefs, char * argv[])
 	/* graphical interface */
 	if((prefs->flags & PREFS_x) == 0)
 	{
+#if GTK_CHECK_VERSION(4, 0, 0)
+		p.window = gtk_window_new();
+#else
 		p.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+#endif
 #if GTK_CHECK_VERSION(3, 0, 0) && !GTK_CHECK_VERSION(3, 14, 0)
 		gtk_window_set_has_resize_grip(GTK_WINDOW(p.window), FALSE);
 #endif
@@ -315,7 +321,11 @@ static int _progress(Prefs * prefs, char * argv[])
 #else
 	hbox = gtk_hbox_new(FALSE, 0);
 #endif
-#if GTK_CHECK_VERSION(3, 10, 0)
+#if GTK_CHECK_VERSION(4, 0, 0)
+	widget = gtk_button_new_with_label(_("Cancel"));
+	gtk_button_set_image(GTK_BUTTON(widget),
+			gtk_image_new_from_icon_name("gtk-cancel"));
+#elif GTK_CHECK_VERSION(3, 10, 0)
 	widget = gtk_button_new_with_label(_("Cancel"));
 	gtk_button_set_image(GTK_BUTTON(widget),
 			gtk_image_new_from_icon_name(GTK_STOCK_CANCEL,
@@ -340,7 +350,12 @@ static int _progress(Prefs * prefs, char * argv[])
 		printf("%lu\n", id);
 		fclose(stdout);
 	}
+#if GTK_CHECK_VERSION(4, 0, 0)
+	while(g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
+		g_main_context_iteration(NULL, TRUE);
+#else
 	gtk_main();
+#endif
 	close(p.fd);
 	close(p.fds[1]);
 	return p.ret;
@@ -387,7 +402,11 @@ static int _error_do(Progress * progress, char const * message,
 			"%s: %s", message, error);
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
 	gtk_dialog_run(GTK_DIALOG(dialog));
+#if GTK_CHECK_VERSION(4, 0, 0)
+	gtk_window_destroy(GTK_WINDOW(dialog));
+#else
 	gtk_widget_destroy(dialog);
+#endif
 	return ret;
 }
 
@@ -734,7 +753,11 @@ int main(int argc, char * argv[])
 		_error("setlocale", 1);
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
+#if GTK_CHECK_VERSION(4, 0, 0)
+	gtk_init();
+#else
 	gtk_init(&argc, &argv);
+#endif
 	while((o = getopt(argc, argv, "b:ef:l:p:t:xz")) != -1)
 		switch(o)
 		{

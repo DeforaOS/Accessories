@@ -75,7 +75,7 @@ static int _usage(void);
 /* callbacks */
 static void _compare_on_changed(gpointer data);
 static void _compare_on_close(gpointer data);
-static gboolean _compare_on_closex(gpointer data);
+static gboolean _compare_on_closex(GtkWidget * widget);
 
 
 /* functions */
@@ -91,8 +91,8 @@ static int _compare(char const * string1, char const * string2)
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
 	gtk_window_set_title(GTK_WINDOW(window), _("Compare strings"));
-	g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(
-				_compare_on_closex), window);
+	g_signal_connect(window, "delete-event", G_CALLBACK(_compare_on_closex),
+			NULL);
 #if GTK_CHECK_VERSION(3, 0, 0)
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
 #else
@@ -135,7 +135,7 @@ static int _compare(char const * string1, char const * string2)
 #if GTK_CHECK_VERSION(3, 10, 0)
 	widget = gtk_button_new_with_label(_("Close"));
 	gtk_button_set_image(GTK_BUTTON(widget),
-			gtk_image_new_from_icon_name(GTK_STOCK_CLOSE,
+			gtk_image_new_from_icon_name("gtk-close",
 				GTK_ICON_SIZE_BUTTON));
 #else
 	widget = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
@@ -145,8 +145,13 @@ static int _compare(char const * string1, char const * string2)
 	gtk_container_add(GTK_CONTAINER(bbox), widget);
 	gtk_box_pack_end(GTK_BOX(vbox), bbox, FALSE, TRUE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
+#if GTK_CHECK_VERSION(4, 0, 0)
+	while(g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
+		g_main_context_iteration(NULL, TRUE);
+#else
 	gtk_widget_show_all(window);
 	gtk_main();
+#endif
 	return 0;
 }
 
@@ -203,18 +208,20 @@ static void _compare_on_close(gpointer data)
 {
 	GtkWidget * widget = data;
 
-	gtk_widget_hide(widget);
+#if GTK_CHECK_VERSION(4, 0, 0)
+	gtk_window_destroy(GTK_WINDOW(widget));
+#else
+	gtk_widget_destroy(widget);
 	gtk_main_quit();
+#endif
 }
 
 
 /* compare_on_closex */
-static gboolean _compare_on_closex(gpointer data)
+static gboolean _compare_on_closex(GtkWidget * widget)
 {
-	GtkWidget * widget = data;
-
 	_compare_on_close(widget);
-	return FALSE;
+	return TRUE;
 }
 
 
@@ -229,7 +236,11 @@ int main(int argc, char * argv[])
 		_error("setlocale", 1);
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
+#if GTK_CHECK_VERSION(4, 0, 0)
+	gtk_init();
+#else
 	gtk_init(&argc, &argv);
+#endif
 	while((o = getopt(argc, argv, "")) != -1)
 		switch(o)
 		{
