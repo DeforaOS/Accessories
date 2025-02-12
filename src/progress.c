@@ -43,7 +43,9 @@
 #include <libintl.h>
 #include <gtk/gtk.h>
 #if GTK_CHECK_VERSION(3, 0, 0)
-# include <gtk/gtkx.h>
+# if defined(GDK_WINDOWING_X11)
+#  include <gtk/gtkx.h>
+# endif
 #endif
 #include "../config.h"
 #define _(string) gettext(string)
@@ -193,12 +195,14 @@ static int _progress(Prefs * prefs, char * argv[])
 		g_signal_connect_swapped(p.window, "delete-event", G_CALLBACK(
 					_progress_closex), p.window);
 	}
+#if defined(GDK_WINDOWING_X11)
 	else
 	{
 		p.window = gtk_plug_new(0);
 		g_signal_connect_swapped(p.window, "embedded", G_CALLBACK(
 					_progress_embedded), &p);
 	}
+#endif
 #if GTK_CHECK_VERSION(3, 0, 0)
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -333,6 +337,7 @@ static int _progress(Prefs * prefs, char * argv[])
 	if((prefs->flags & PREFS_x) == 0)
 		/* show the window */
 		gtk_widget_show(p.window);
+#if defined(GDK_WINDOWING_X11)
 	else
 	{
 		/* print the window ID and force a flush */
@@ -340,6 +345,7 @@ static int _progress(Prefs * prefs, char * argv[])
 		printf("%lu\n", id);
 		fclose(stdout);
 	}
+#endif
 	gtk_main();
 	close(p.fd);
 	close(p.fds[1]);
